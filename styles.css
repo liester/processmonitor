@@ -1,0 +1,59 @@
+table {
+    text-align: center;
+}
+
+table thead {
+    font-weight: bold;
+}
+
+.red_background {
+    background-color: #e69696;
+}
+
+.green_background {
+    background-color: #7cda7c;
+}
+
+.table_content { margin-top: 5em; }
+
+tr {
+    border: black;
+}
+
+#main_content {
+    width: 90%;
+    margin: auto;
+}
+
+.hidden {
+    visibility: hidden
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.table_content {
+  border-radius: 7px;
+  border: 2px solid black;
+}
+
+.table_heading {
+    margin: 1em;
+}
+
+.table_content_header {
+    font-size: 2em;
+}
+
+.assign_buttons {
+   margin-top: 1em;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+label {
+    font-weight: 500;
+}
