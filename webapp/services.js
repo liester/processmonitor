@@ -183,14 +183,14 @@ let buildBackendMonitorTable = () => {
 };
 
 let refreshData = () => {
-    createRefreshTimer(2);
+    createRefreshTimer(300);
     buildBackendStatus();
     buildFrontendStatus();
 }
 
 
 let initializePage = () => {
-    createRefreshTimer(2);
+    createRefreshTimer(300);
     buildBackendStatus();
     buildFrontendStatus();
 }
