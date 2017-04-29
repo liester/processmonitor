@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Process Monitor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script defer src="services.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+</head>
+
+<body>
+    <div id="main_content">
+        <label>Next Refresh:</label><label id="refresh_time">5m 00s</label>
+
+        <div id="pay_statuses" class="row">
+            <div id="pay_frontend" class="col-md-5 border">
+                <div class="row">
+                    <div class="col center">
+                        <h2><span class="front_end_smiley"></span> Pay Frontend <span class="front_end_smiley"></span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col center">
+                                <h4>Last Success</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="pay_front_success" class="col center">
+                                None
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 center">
+                        <div class="col center">
+                            <h4>Last Failure</h4>
+                        </div>
+                        <div class="row">
+                            <div id="pay_front_fail" class="col center">
+                                None
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pay_backend" class="col-md-5 offset-md-2 border">
+                <div class="row">
+                    <div class="col center">
+                        <h2><span class="back_end_smiley"></span> Pay Backend <span class="back_end_smiley"></span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col center">
+                                <h4>Last Success</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="pay_back_success" class="col center">
+                                None
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 center">
+                        <div class="col center">
+                            <h4>Last Failure</h4>
+                        </div>
+                        <div class="row">
+                            <div id="pay_back_fail" class="col center">
+                                None
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

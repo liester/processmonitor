@@ -45,6 +45,76 @@ function createRefreshTimer(duration) {
     }, 1000);
 }
 
+let buildBackendStatus = () => {
+    makeRequest('GET', 'http://localhost:3000/payback').then((response) => {
+        response = JSON.parse(response);
+        let lastSuccess = document.getElementById('pay_back_success');
+        let lastFail = document.getElementById('pay_back_fail');
+        let pay_backend = document.getElementById('pay_backend');
+        if (response.statusCode == 401) {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastSuccess.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('back_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-smile-o fa' aria-hidden='true'></i>";
+            }
+            pay_backend.classList.add('green_background');
+            pay_backend.classList.remove('red_background');
+        } else {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastFail.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('back_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-frown-o fa' aria-hidden='true'></i>";
+            }
+            pay_backend.classList.remove('green_background');
+            pay_backend.classList.add('red_background');
+        }
+    });
+
+};
+
+let buildFrontendStatus = () => {
+    makeRequest('GET', 'http://localhost:3000/payfront').then((response) => {
+        response = JSON.parse(response);
+        let lastSuccess = document.getElementById('pay_front_success');
+        let lastFail = document.getElementById('pay_front_fail');
+        let pay_frontend = document.getElementById('pay_frontend');
+        if (response.statusCode == 200) {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastSuccess.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('front_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-smile-o fa' aria-hidden='true'></i>";
+            }
+            pay_frontend.classList.add('green_background');
+            pay_frontend.classList.remove('red_background');
+        } else {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastFail.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('front_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-frown-o fa' aria-hidden='true'></i>";
+            }
+            pay_frontend.classList.remove('green_background');
+            pay_frontend.classList.add('red_background');
+        }
+    });
+
+};
+
 let buildFrontendMonitorTable = () => {
     makeRequest('GET', 'http://localhost:3000/payfront').then((response) => {
         response = JSON.parse(response);
@@ -114,15 +184,15 @@ let buildBackendMonitorTable = () => {
 
 let refreshData = () => {
     createRefreshTimer(2);
-    buildFrontendMonitorTable();
-    buildBackendMonitorTable();
+    buildBackendStatus();
+    buildFrontendStatus();
 }
 
 
 let initializePage = () => {
     createRefreshTimer(2);
-    buildFrontendMonitorTable();
-    buildBackendMonitorTable();
+    buildBackendStatus();
+    buildFrontendStatus();
 }
 
 function removeChildNodes(node) {
