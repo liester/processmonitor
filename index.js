@@ -4,6 +4,14 @@ const port = 3000
 const httpRequest = require('request');
 const q = require('q');
 const rp = require('request-promise-native');
+const mysql = require('mysql')
+const connection = mysql.createConnection({
+    host: 'prododa01.eparonline.com',
+    user: 'falco',
+    password: ':86_c0v3r_73x45_91:',
+    database: 'dev',
+    port: '3306'
+});
 
 //CORS goodness
 app.use(function (req, res, next) {
@@ -26,6 +34,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/payfront', (request, clientReponse) => {
+
     var payFrontEndRequest = {
         method: 'GET',
         uri: 'https://pay.atssecured.com/static/#',
@@ -38,9 +47,19 @@ app.get('/payfront', (request, clientReponse) => {
     rp(payFrontEndRequest).then((response) => {
         payFrontendStatus.statusCode = response.statusCode;
         clientReponse.send(JSON.stringify(payFrontendStatus));
+
+        let params = {
+            insert_by: 1,
+            payload: 'HTTP Status: ' + payFrontendStatus.statusCode
+        };
+        let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
+            if (error) throw error;
+            // Neat! 
+        });
     }).catch((err) => {
         console.log(err.statusCode);
     });
+
 });
 
 app.get('/payback', (request, clientReponse) => {
@@ -55,6 +74,14 @@ app.get('/payback', (request, clientReponse) => {
     rp(payBackEndRequest).then((response) => {
         payBackendStatus.statusCode = response.statusCode;
         clientReponse.send(JSON.stringify(payBackendStatus));
+        let params = {
+            insert_by: 1,
+            payload: 'HTTP Status: ' + payBackendStatus.statusCode
+        };
+        let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
+            if (error) throw error;
+            // Neat! 
+        });
     });
 });
 
