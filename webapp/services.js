@@ -115,6 +115,76 @@ let buildFrontendStatus = () => {
 
 };
 
+let buildReportFrontendStatus = () => {
+    makeRequest('GET', 'http://localhost:3000/reportfront').then((response) => {
+        response = JSON.parse(response);
+        let lastSuccess = document.getElementById('report_front_success');
+        let lastFail = document.getElementById('report_front_fail');
+        let pay_frontend = document.getElementById('report_frontend');
+        if (response.statusCode == 200) {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastSuccess.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('report_front_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-smile-o fa' aria-hidden='true'></i>";
+            }
+            pay_frontend.classList.add('green_background');
+            pay_frontend.classList.remove('red_background');
+        } else {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastFail.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('report_front_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-frown-o fa' aria-hidden='true'></i>";
+            }
+            pay_frontend.classList.remove('green_background');
+            pay_frontend.classList.add('red_background');
+        }
+    });
+
+};
+
+let buildReportBackendStatus = () => {
+    makeRequest('GET', 'http://localhost:3000/reportback').then((response) => {
+        response = JSON.parse(response);
+        let lastSuccess = document.getElementById('report_back_success');
+        let lastFail = document.getElementById('report_back_fail');
+        let pay_frontend = document.getElementById('report_backend');
+        if (response.statusCode == 401) {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastSuccess.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('report_back_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-smile-o fa' aria-hidden='true'></i>";
+            }
+            pay_frontend.classList.add('green_background');
+            pay_frontend.classList.remove('red_background');
+        } else {
+            let date = new Date();
+            let time = date.toLocaleTimeString();
+            console.log(time);
+            let day = date.toLocaleDateString();
+            lastFail.innerText = time + ' ' + day;
+            let smilies = document.getElementsByClassName('report_back_end_smiley');
+            for (var i = 0; i < smilies.length; i++) {
+                smilies[i].innerHTML = "<i class='fa fa-frown-o fa' aria-hidden='true'></i>";
+            }
+            pay_frontend.classList.remove('green_background');
+            pay_frontend.classList.add('red_background');
+        }
+    });
+
+};
+
 let buildFrontendMonitorTable = () => {
     makeRequest('GET', 'http://localhost:3000/payfront').then((response) => {
         response = JSON.parse(response);
@@ -183,16 +253,20 @@ let buildBackendMonitorTable = () => {
 };
 
 let refreshData = () => {
-    createRefreshTimer(300);
+    createRefreshTimer(20);
     buildBackendStatus();
     buildFrontendStatus();
+    buildReportFrontendStatus();
+    buildReportBackendStatus();
 }
 
 
 let initializePage = () => {
-    createRefreshTimer(300);
+    createRefreshTimer(20);
     buildBackendStatus();
     buildFrontendStatus();
+    buildReportFrontendStatus();
+    buildReportBackendStatus();
 }
 
 function removeChildNodes(node) {

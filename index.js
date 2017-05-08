@@ -52,10 +52,10 @@ app.get('/payfront', (request, clientReponse) => {
             insert_by: 1,
             payload: 'HTTP Status: ' + payFrontendStatus.statusCode
         };
-        let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
-            if (error) throw error;
-            // Neat! 
-        });
+        //~ let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
+            //~ if (error) throw error;
+            //~ // Neat! 
+        //~ });
     }).catch((err) => {
         console.log(err.statusCode);
     });
@@ -78,12 +78,66 @@ app.get('/payback', (request, clientReponse) => {
             insert_by: 1,
             payload: 'HTTP Status: ' + payBackendStatus.statusCode
         };
-        let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
-            if (error) throw error;
-            // Neat! 
-        });
+        //~ let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
+            //~ if (error) throw error;
+            //~ // Neat! 
+        //~ });
     });
 });
+
+
+app.get('/reportfront', (request, clientReponse) => {
+
+    var reportFrontEndRequest = {
+        method: 'GET',
+        uri: 'https://reports.atssecured.com/#/',
+        resolveWithFullResponse: true,
+        simple: false
+    };
+
+    let reportFrontendStatus = {};
+
+    rp(reportFrontEndRequest).then((response) => {
+        reportFrontendStatus.statusCode = response.statusCode;
+        clientReponse.send(JSON.stringify(reportFrontendStatus));
+
+        let params = {
+            insert_by: 1,
+            payload: 'HTTP Status: ' + reportFrontendStatus.statusCode
+        };
+        //~ let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
+            //~ if (error) throw error;
+            //~ // Neat! 
+        //~ });
+    }).catch((err) => {
+        console.log(err.statusCode);
+    });
+
+});
+
+app.get('/reportback', (request, clientReponse) => {
+    let reportBackEndRequest = {
+        method: 'GET',
+        uri: 'https://reports.atssecured.com/authenticate/adminSession',
+        resolveWithFullResponse: true,
+        simple: false
+    };
+    let reportBackendStatus = {};
+
+    rp(reportBackEndRequest).then((response) => {
+        reportBackendStatus.statusCode = response.statusCode;
+        clientReponse.send(JSON.stringify(reportBackendStatus));
+        let params = {
+            insert_by: 1,
+            payload: 'HTTP Status: ' + reportBackendStatus.statusCode
+        };
+        //~ let query = connection.query('INSERT INTO pay_audit SET ?', params, function (error, results, fields) {
+            //~ if (error) throw error;
+            //~ // Neat! 
+        //~ });
+    });
+});
+
 
 
 
